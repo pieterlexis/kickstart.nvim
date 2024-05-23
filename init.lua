@@ -732,15 +732,13 @@ require('lazy').setup({
     'ellisonleao/gruvbox.nvim',
     lazy = false,
     priority = 1000, -- Make sure to load this before all the other start plugins.
-    config = function()
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      require('gruvbox').setup {
-        overrides = {
-          SignColumn = { bg = '#282828' },
-        },
-      }
+    opts = {
+      overrides = {
+        SignColumn = { bg = '#282828' },
+      },
+    },
+    config = function(_, opts)
+      require('gruvbox').setup(opts)
       vim.cmd.colorscheme 'gruvbox'
       vim.o.background = 'dark'
       vim.cmd.hi 'Comment gui=none'
