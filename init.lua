@@ -73,6 +73,17 @@ vim.opt.scrolloff = 10
 vim.opt.wildmenu = true
 vim.opt.wildmode = 'longest,list,full'
 
+-- Spell checking
+-- check for spell in text filetypes
+vim.opt.spelllang = { 'en' }
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'gitcommit', 'markdown' },
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.spell = true
+  end,
+})
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -200,8 +211,9 @@ require('lazy').setup({
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
-    config = function() -- This is the function that runs, AFTER loading
-      require('which-key').setup()
+    opts = { spelling = true },
+    config = function(_, opts) -- This is the function that runs, AFTER loading
+      require('which-key').setup(opts)
 
       -- Document existing key chains
       require('which-key').register {
