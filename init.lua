@@ -228,7 +228,7 @@ require('lazy').setup({
       }
       -- visual mode
       require('which-key').register({
-        ['<leader>h'] = { 'Git [H]unk' },
+        ['<leader>gh'] = { 'Git [H]unk' },
       }, { mode = 'v' })
     end,
   },
