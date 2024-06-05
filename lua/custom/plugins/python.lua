@@ -1,5 +1,10 @@
 return {
   'linux-cultist/venv-selector.nvim',
+  branch = 'regexp',
+  lazy = false,
+  config = function()
+    require('venv-selector').setup()
+  end,
   init = function()
     -- register the keys in which-key
     require('which-key').register {
@@ -8,9 +13,6 @@ return {
       ['<leader>pt'] = { name = '[P]ython [T]est', _ = 'which_key_ignore' }, -- see below
     }
   end,
-  opts = {
-    name = { 'venv', '.venv' },
-  },
   dependencies = {
     'folke/which-key.nvim',
     'neovim/nvim-lspconfig',
@@ -25,9 +27,6 @@ return {
     },
   },
   keys = {
-    -- Keymap to open VenvSelector to pick a venv.
     { '<leader>pvs', '<cmd>VenvSelect<cr>', desc = '[P]ython [V]irtualenv [S]elect' },
-    -- Keymap to retrieve the venv from a cache (the one previously used for the same project directory).
-    { '<leader>pvc', '<cmd>VenvSelectCached<cr>', desc = '[P]ython [V]irtualenv select from [C]ache' },
   },
 }
