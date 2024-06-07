@@ -7,6 +7,8 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
+vim.opt.title = true
+
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 -- NOTE: You can change these options as you wish!
@@ -716,24 +718,32 @@ require('lazy').setup({
     end,
   },
 
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'ellisonleao/gruvbox.nvim',
+  -- { -- You can easily change to a different colorscheme.
+  --   -- Change the name of the colorscheme plugin below, and then
+  --   -- change the command in the config to whatever the name of that colorscheme is.
+  --   --
+  --   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+  --   'ellisonleao/gruvbox.nvim',
+  --   lazy = false,
+  --   priority = 1000, -- Make sure to load this before all the other start plugins.
+  --   opts = {
+  --     overrides = {
+  --       SignColumn = { bg = '#282828' },
+  --     },
+  --   },
+  --   config = function(_, opts)
+  --     require('gruvbox').setup(opts)
+  --     vim.cmd.colorscheme 'gruvbox'
+  --     vim.o.background = 'dark'
+  --     vim.cmd.hi 'Comment gui=none'
+  --   end,
+  -- },
+  {
+    'folke/tokyonight.nvim',
     lazy = false,
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    opts = {
-      overrides = {
-        SignColumn = { bg = '#282828' },
-      },
-    },
-    config = function(_, opts)
-      require('gruvbox').setup(opts)
-      vim.cmd.colorscheme 'gruvbox'
-      vim.o.background = 'dark'
-      vim.cmd.hi 'Comment gui=none'
+    priority = 1000,
+    init = function()
+      vim.cmd.colorscheme 'tokyonight-night'
     end,
   },
 
