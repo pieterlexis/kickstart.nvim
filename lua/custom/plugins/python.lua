@@ -7,10 +7,13 @@ return {
   end,
   init = function()
     -- register the keys in which-key
-    require('which-key').register {
-      ['<leader>p'] = { name = '[P]ython', _ = 'which_key_ignore' },
-      ['<leader>pv'] = { name = '[P]ython [V]irtualenv', _ = 'which_key_ignore' },
-      ['<leader>pt'] = { name = '[P]ython [T]est', _ = 'which_key_ignore' }, -- see below
+    require('which-key').add {
+      { '<leader>p', group = '[P]ython' },
+      { '<leader>p_', hidden = true },
+      { '<leader>pv', group = '[P]ython [V]irtualenv' },
+      { '<leader>pv_', hidden = true },
+      { '<leader>pt', group = '[P]ython [T]est' },
+      { '<leader>pt_', hidden = true },
     }
   end,
   dependencies = {
