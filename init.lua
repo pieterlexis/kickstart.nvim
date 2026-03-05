@@ -591,10 +591,64 @@ require('lazy').setup({
             '--fallback-style=llvm',
           },
         },
-        gopls = {},
         markdownlint = {},
         marksman = {},
-        pyright = {},
+        gopls = {
+          root_dir = function(bufnr, on_dir)
+            local fname = vim.api.nvim_buf_get_name(bufnr)
+            on_dir(require('lspconfig.util').root_pattern 'go.mod'(fname) or vim.fs.dirname(vim.fs.find('.git', { upward = true })[1]))
+          end,
+          settings = {
+            gopls = {
+              gofumpt = true,
+              codelenses = {
+                gc_details = false,
+                generate = true,
+                regenerate_cgo = true,
+                run_govulncheck = true,
+                test = true,
+                tidy = true,
+                upgrade_dependency = true,
+                vendor = true,
+              },
+              hints = {
+                assignVariableTypes = true,
+                compositeLiteralFields = true,
+                compositeLiteralTypes = true,
+                constantValues = true,
+                functionTypeParameters = true,
+                parameterNames = true,
+                rangeVariableTypes = true,
+              },
+              analyses = {
+                nilness = true,
+                unusedparams = true,
+                unusedwrite = true,
+                useany = true,
+              },
+              usePlaceholders = true,
+              completeUnimported = true,
+              staticcheck = true,
+              directoryFilters = { '-.git', '-.vscode', '-.idea', '-.vscode-test', '-node_modules' },
+              semanticTokens = true,
+            },
+          },
+        },
+        -- markdownlint = {},
+        -- marksman = {},
+        pyright = {
+          -- filetypes = { 'python' },
+          -- settings = {
+          --   python = {
+          --     analysis = {
+          --       autoSearchPaths = true,
+          --       diagnosticMode = 'workspace',
+          --       useLibraryCodeForTypes = true,
+          --     },
+          --   },
+          -- },
+        },
+        ruff = {},
         tflint = {},
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -650,10 +704,19 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'ansible-language-server',
-        'terraform-ls',
+        'delve',
+        'gofumpt',
+        'goimports',
+        'golangci-lint',
+        'gomodifytags',
+        'gopls',
+        'impl',
         'jinja-lsp',
         'lua-language-server', -- Lua Language server
+        'python-lsp-server',
+        'ruff',
         'stylua', -- Used to format Lua code
+        'terraform-ls',
         'yaml-language-server',
         -- You can add other tools here that you want Mason to install
       })
@@ -887,7 +950,25 @@ require('lazy').setup({
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter-intro`
     config = function()
       -- ensure basic parser are installed
-      local parsers = { 'bash', 'c', 'cpp', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'python', 'query', 'vim', 'vimdoc' }
+      local parsers = {
+        'bash',
+        'c',
+        'cpp',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'python',
+        'query',
+        'vim',
+        'vimdoc',
+        'go',
+        'gomod',
+        'gowork',
+        'gosum',
+      }
       require('nvim-treesitter').install(parsers)
 
       ---@param buf integer
